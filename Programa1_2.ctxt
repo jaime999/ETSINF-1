@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Programa1_2
+comment1.params=celsius
+comment1.target=double\ getFahrenheit(double)
+comment2.params=fahrenheit
+comment2.target=double\ getCelsius(double)
+comment3.params=args
+comment3.target=void\ main(java.lang.String[])
+numComments=4
