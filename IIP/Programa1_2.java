@@ -32,3 +32,4 @@ public class Programa1_2
         System.out.println("El total en grados Celsius es " + getCelsius(f));
     }
 }
+
