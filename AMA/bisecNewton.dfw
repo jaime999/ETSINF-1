@@ -8,3 +8,4 @@ APROX_BISEC(u,a,b,n):=(ELEMENT(BISEC(u,a,b,n),1)+ELEMENT(BISEC(u,a,b,n),2))/2
 
 NEWTON(u,x0,n):=ITERATES(x-u/DIF(u,x),x,x0,n)
 
+
