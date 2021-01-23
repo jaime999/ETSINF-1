@@ -1,98 +1,74 @@
 /**
  * Clase Hora. 
  * 
- *  @author (              ) 
- *  @version (Curso 2014-15)
+ *  @author (IIP. Grado en Informatica. ETSINF, UPV) 
+ *  @version (Curso 2015-16)
  */
-public class Hora
-{
-    // ATRIBUTOS:
+public class Hora {
+    private static final int MS_POR_DIA = 24 * 3600 * 1000;
     private int h;
     private int m;
-    // CONSTRUCTORES:
-   /**
-    *  Hora correspondiente a las hor horas y min minutos.
-    *  Precondicion: 0<=hor<24, 0<=min<60.
-    */
-    public Hora(int hor,int min) {
-       m = min;
-       h = hor;
-    }
-   
+
     /**
-     * Hora (horas y minutos) actual UTC (tiempo coordinado universal).
+     *  Hora correspondiente a las hh horas y mm minutos.
+     *  Precondicion: 0<=hh<24, 0<=mm<60.
      */
-    public Hora(){
-       long t = System.currentTimeMillis () % (24*3600*1000);
-       int tRestante = (int) (System.currentTimeMillis() % (24*3600*1000));
-       int segundos = tRestante/1000;
-       m = segundos/60;
-       h = m/60;
-       m = m % 60;
+    public Hora(int hh, int mm) {
+        this.h = hh;
+        this.m = mm;
+    }
+ 
+    /**
+     * Hora (horas y minutos) actual UTC (tiempo coordinado universal)
+     */
+    public Hora() {   
+        //long t =  (System.currentTimeMillis() % (24 * 3600 * 1000));
+        long t =  System.currentTimeMillis() % MS_POR_DIA;
+        this.h = (int) (t / (3600 * 1000));
+        this.m = (int) (t % (3600 * 1000)) / (60 * 1000); 
     }
     
-    // CONSULTORES Y MODIFICADORES:
-   /** Consulta las horas de la Hora */ 
-   public int getHora() {
-       return h;
+    /** Devuelve las horas de la Hora */ 
+    public int getHoras() { return this.h; }
+
+    /** Devuelve los minutos de la Hora */ 
+    public int getMin() {  return this.m; }
+   
+    /** Actualiza a hh las horas de la Hora */ 
+    public void setHoras(int hh) { this.h = hh; }
+   
+    /** Actualiza a mm los minutos de la Hora */ 
+    public void setMin(int mm) { this.m = mm; }
+   
+    /** Devuelve la Hora en formato "hh:mm" */
+    public String toString() {
+        String hh = "0" + this.h;
+        hh = hh.substring(hh.length() - 2);
+        String mm = "0" + this.m;
+        mm = mm.substring(mm.length() - 2);
+        return hh + ":" + mm;
+    }
+   
+    /** Devuelve el numero de minutos transcurridos 
+     *  desde las 00:00 hasta la la Hora */
+    public int aMinutos() { return this.h * 60 + this.m; }
+    
+    /** Compara cronologicamente la Hora y otraHora. El resultado es un valor:
+     *     - negativo si la Hora es anterior a otraHora,
+     *     - cero si son iguales,
+     *     - positivo si la Hora es posterior a otraHora.
+     */
+    public int compareTo(Hora otraHora) {
+        int actualMinutos = this.aMinutos();
+        int otraHoraMinutos = otraHora.aMinutos();
+        return actualMinutos - otraHoraMinutos;
     }
 
-   /** Consulta los minutos de la Hora */ 
-   public int getMin() {
-       return m;
-    }
-   
-   /** Modifica las horas de la Hora */ 
-   public void setHora(int hor){
-       this.h = hor;
-    }
-   
-   /** Modifica los minutos de la Hora */ 
-   public void  setMin(int min){
-       this.m = min;
-    }
-   
-   // OTROS METODOS:
-   /** Devuelve la hora en formato "hh:mm".
-   */
-   public String toString(){
-       String hh = "0" +h;
-       int longitudh = hh.length();
-       hh = hh.substring(longitudh-2);
-       String mm = "0" +m;
-       int longitudm = mm.length();
-       mm = mm.substring(longitudm-2);
-       return (hh + ":" + mm);
-    }
-   
-   /** Devuelve el numero de minutos transcurridos Desde las 00:00 hasta la Hora */
-   public int aMinutos(){
-       int aMinutos = m + h * 60;
-       return (aMinutos);
-    }
-
-    /** Compara cronologicamente la Hora y hor. El resultado es un valor:
-   *     - negativo si la Hora es anterior a hor,
-   *     - cero si son iguales,
-   *     - positivo si la Hora es posterior a hor.
-   */
-  
-   public int compareTo (Hora otraHora){
-        return this.aMinutos()-otraHora.aMinutos();
-    }
-
-   
-
-  /** Devuelve true sii o y la Hora son dos horas iguales. 
-   */
-   public boolean equals (Object o){
-        return o instanceof Hora &&
-               ((Hora) o).h == this.h &&
-               ((Hora) o).m == this.m;
-    }
-      
-  // ACTIVIDAD EXTRA:      
-  /** Devuelve una hora a partir de la descripcion 
-   *  textual en formato "hh:mm".
-   */ 
+    /** Devuelve true sii o es una Hora que coincide
+     *  en horas y minutos con la Hora */
+    public boolean equals(Object o) {
+        return o instanceof Hora
+            && this.h == ((Hora) o).h
+            && this.m == ((Hora) o).m;
+    }  
 }
